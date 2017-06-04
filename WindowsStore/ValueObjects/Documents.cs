@@ -1,8 +1,8 @@
 ﻿namespace WindowsStore.ValueObjects
 {
-    public class Documentos
+    public class Documents
     {
-        public Documentos(string cpf)
+        public Documents(string cpf)
         {
             CPF = cpf;
         }

@@ -96,12 +96,26 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\Purchase.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Enums\PaymentChoice.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValueObjects\Documentos.cs" />
+    <Compile Include="UserControls\LogInControl.xaml.cs">
+      <DependentUpon>LogInControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProductsControl.xaml.cs">
+      <DependentUpon>ProductsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SuggestControl.xaml.cs">
+      <DependentUpon>SuggestControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueObjects\Birthday.cs" />
+    <Compile Include="Entities\Cart.cs" />
+    <Compile Include="ValueObjects\Documents.cs" />
     <Compile Include="ValueObjects\Email.cs" />
     <Compile Include="ValueObjects\Name.cs" />
   </ItemGroup>
@@ -112,6 +126,8 @@
     <None Include="WindowsStore_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Cart.png" />
+    <Content Include="Assets\User.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -130,10 +146,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\LogInControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ProductsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SuggestControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.2.3</Version>
+      <Version>5.3.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />

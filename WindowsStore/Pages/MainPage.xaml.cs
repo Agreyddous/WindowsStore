@@ -12,19 +12,31 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using WindowsStore.Entities;
 
 namespace WindowsStore
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
+        public User User { get { return this.DataContext as User; } }
+        private List<Product> ProductsList;
         public MainPage()
         {
             this.InitializeComponent();
+            ProductsList = new List<Product>();
+        }
+
+        private void CartButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (AddProductPane.Height == 0)
+                OpenPane.Begin();
+            else
+                ClosePane.Begin();
+        }
+
+        private void ProductsGrid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }
