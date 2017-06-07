@@ -1,42 +1,87 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media.Imaging;
 using WindowsStore.Entities;
+using WindowsStore.Handlers;
+using WindowsStore.UserControls;
 
 namespace WindowsStore
 {
     public sealed partial class MainPage : Page
     {
-        public User User { get { return this.DataContext as User; } }
-        private List<Product> ProductsList;
+        public User User;
+        private ObservableCollection<Product> ProductsList;
         public MainPage()
         {
             this.InitializeComponent();
-            ProductsList = new List<Product>();
+            ProductsList = new ObservableCollection<Product>();
         }
 
         private void CartButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (AddProductPane.Height == 0)
-                OpenPane.Begin();
+            if(User.Admin)
+            {
+                NewProduct.Visibility = Visibility.Visible;
+                NewProduct.IsEnabled = true;
+            }
+
             else
-                ClosePane.Begin();
+            {
+                //See Cart
+            }
         }
 
         private void ProductsGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            
         }
-    }
+
+        private async void LogInControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            User = (User)(sender as LogInControl).DataContext;
+
+            if (User != null)
+            {
+                LogIn.IsEnabled = false;
+                LogIn.Visibility = Visibility.Collapsed;
+                UpdateLayout();
+                UserImageSource.ImageSource = new BitmapImage(new Uri(User.ImageSource));
+                UserImage.IsTapEnabled = true;
+                ActionButton.IsTapEnabled = true;
+
+                if(User.Admin)
+                    ActionButtonImageSource.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/Add.png"));
+                else
+                    ActionButtonImageSource.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/Cart.png"));
+
+                if (await FilesHandler.CheckIfExistsFile("list.li"))
+                    ProductsList = await FilesHandler.RetrieveListContent("list.li");
+            }
+        }
+
+        private void UserImage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            UserImage.IsTapEnabled = false;
+            ActionButton.IsTapEnabled = false;
+            LogIn.IsEnabled = true;
+            LogIn.Visibility = Visibility.Visible;
+        }
+
+        private async void NewProduct_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            if ((Product)(sender as NewProduct).DataContext != null)
+            {
+                Product newProduct = (Product)(sender as NewProduct).DataContext;
+                ProductsList.Add(newProduct);
+                await FilesHandler.StoreList(ProductsList);
+            }
+
+            NewProduct.IsEnabled = false;
+            NewProduct.Visibility = Visibility.Collapsed;
+            UpdateLayout();
+            }
+        }
 }

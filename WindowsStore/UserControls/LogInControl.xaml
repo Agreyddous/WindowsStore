@@ -7,7 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignHeight="300"
-             d:DesignWidth="400">
+             d:DesignWidth="300">
 
     <Border CornerRadius="12"
             BorderThickness="1"
@@ -44,7 +44,7 @@
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="ms-appx:///Assets/User.png"
+                                <ImageBrush ImageSource="ms-appx:///Assets/0User.png"
                                             Stretch="Uniform" />
                             </Ellipse.Fill>
                         </Ellipse>
@@ -56,7 +56,7 @@
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="ms-appx:///Assets/User.png"
+                                <ImageBrush ImageSource="ms-appx:///Assets/1User.png"
                                             Stretch="Uniform" />
                             </Ellipse.Fill>
                         </Ellipse>
@@ -68,34 +68,34 @@
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="ms-appx:///Assets/User.png"
+                                <ImageBrush ImageSource="ms-appx:///Assets/2User.png"
                                             Stretch="Uniform" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </ListBoxItem>
 
                     <ListBoxItem Name="FourthPicture">
-                    <Ellipse Height="30"
-                             Width="30"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="ms-appx:///Assets/User.png"
-                                        Stretch="Uniform" />
-                        </Ellipse.Fill>
-                    </Ellipse>
+                        <Ellipse Height="30"
+                                 Width="30"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="ms-appx:///Assets/3User.png"
+                                            Stretch="Uniform" />
+                            </Ellipse.Fill>
+                        </Ellipse>
                     </ListBoxItem>
 
                     <ListBoxItem Name="FithPicture">
-                    <Ellipse Height="30"
-                             Width="30"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="ms-appx:///Assets/User.png"
-                                        Stretch="Uniform" />
-                        </Ellipse.Fill>
-                    </Ellipse>
+                        <Ellipse Height="30"
+                                 Width="30"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="ms-appx:///Assets/4User.png"
+                                            Stretch="Uniform" />
+                            </Ellipse.Fill>
+                        </Ellipse>
                     </ListBoxItem>
 
                 </ListBox>
@@ -107,13 +107,8 @@
                                 RelativePanel.AlignRightWithPanel="True"
                                 RelativePanel.AlignLeftWith="UserPictureListBox"
                                 Margin="75, 50, 20, 0"
-                                TextChanged="UserNameBox_TextChanged"
-                                ItemsSource="{x:Bind UsersList}">
-                    <AutoSuggestBox.ItemTemplate>
-                        <DataTemplate x:DataType="data:User">
-                            <local:SuggestControl />
-                        </DataTemplate>
-                    </AutoSuggestBox.ItemTemplate>
+                                LostFocus="UserNameBox_LostFocus"
+                                QuerySubmitted="UserNameBox_QuerySubmitted">
                     <AutoSuggestBox.Header>
                         <TextBlock Text="Username:"
                                    HorizontalAlignment="Center"
@@ -128,7 +123,8 @@
                           RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.Below="UserNameBox"
                           RelativePanel.AlignLeftWith="UserPictureListBox"
-                          Margin="75, 50, 20, 0">
+                          Margin="75, 50, 20, 0"
+                          SelectionChanged="AccountTypeBox_SelectionChanged">
 
                     <ComboBox.Header>
                         <TextBlock Text="Account Type:"

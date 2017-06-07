@@ -13,10 +13,10 @@
                  Width="30">
             <Ellipse.Fill>
                 <ImageBrush Stretch="Uniform"
-                            ImageSource="{x:Bind User.Image}" />
+                            ImageSource="{x:Bind User.ImageSource}" />
             </Ellipse.Fill>
         </Ellipse>
-        <TextBlock Text="{x:Bind User.Name.FirstName}"
+        <TextBlock Text="{x:Bind User.Username.ToString()}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="10,0,0,0" />

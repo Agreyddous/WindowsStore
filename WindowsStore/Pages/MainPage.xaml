@@ -1,36 +1,11 @@
 ﻿<Page x:Class="WindowsStore.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:WindowsStore"
-      xmlns:data="using:WindowsStore.Entities"
+      xmlns:Data="using:WindowsStore.Entities"
       xmlns:UserControl="using:WindowsStore.UserControls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
-
-    <Page.Resources>
-
-        <Storyboard x:Name="OpenPane">
-
-            <DoubleAnimation Storyboard.TargetName="AddProductPane"
-                             Storyboard.TargetProperty="Height"
-                             From="0"
-                             To="500"
-                             Duration="0:0:0.35" />
-
-        </Storyboard>
-
-        <Storyboard x:Name="ClosePane">
-
-            <DoubleAnimation Storyboard.TargetName="AddProductPane"
-                             Storyboard.TargetProperty="Height"
-                             From="500"
-                             To="0"
-                             Duration="0:0:0.35" />
-
-        </Storyboard>
-
-    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -50,23 +25,27 @@
                  Height="35"
                  Width="35"
                  HorizontalAlignment="Left"
-                 VerticalAlignment="Center">
+                 VerticalAlignment="Center"
+                 IsTapEnabled="False"
+                 Tapped="UserImage_Tapped">
             <Ellipse.Fill>
-                <ImageBrush Stretch="Fill"
-                            ImageSource="{x:Bind User.Image}" />
+                <ImageBrush x:Name="UserImageSource"
+                            Stretch="Uniform"
+                            ImageSource="{x:Bind User.ImageSource}" />
             </Ellipse.Fill>
         </Ellipse>
 
-        <Ellipse Name="CartButton"
+        <Ellipse Name="ActionButton"
                  Margin="0,10,10,10"
                  Height="35"
                  Width="35"
                  HorizontalAlignment="Right"
                  VerticalAlignment="Center"
+                 IsTapEnabled="False"
                  Tapped="CartButton_Tapped">
             <Ellipse.Fill>
-                <ImageBrush Stretch="Fill"
-                            ImageSource="ms-appx:///Assets/Cart.png">
+                <ImageBrush x:Name="ActionButtonImageSource"
+                            Stretch="Fill">
                     <ImageBrush.RelativeTransform>
                         <CompositeTransform CenterY="0.5"
                                             CenterX="0.5"
@@ -85,35 +64,32 @@
         <GridView Name="ProductsGrid"
                   Grid.Row="1"
                   Margin="10"
-                  SelectionMode="None"
+                  SelectionMode="Multiple"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Stretch"
                   IsItemClickEnabled="True"
-                  IsHoldingEnabled="True"
                   ItemsSource="{x:Bind ProductsList}"
                   ItemClick="ProductsGrid_ItemClick">
 
             <GridView.ItemTemplate>
 
-                <DataTemplate x:DataType="data:Product">
-
+                <DataTemplate x:DataType="Data:Product">
                     <UserControl:ProductsControl />
-
                 </DataTemplate>
 
             </GridView.ItemTemplate>
 
         </GridView>
 
-        <Rectangle Name="AddProductPane"
-                   Grid.Row="1"
-                   Margin="50,100,50,0"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Bottom"
-                   Height="0"
-                   Fill="#66727272" />
+        <UserControl:LogInControl x:Name="LogIn"
+                                  Grid.Row="1"
+                                  DataContextChanged="LogInControl_DataContextChanged" />
 
-        <UserControl:LogInControl Grid.Row="1" />
+        <UserControl:NewProduct x:Name="NewProduct"
+                                Grid.Row="1"
+                                IsEnabled="False"
+                                Visibility="Collapsed"
+                                DataContextChanged="NewProduct_DataContextChanged" />
 
     </Grid>
 </Page>

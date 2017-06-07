@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WindowsStore.Entities;
 
 namespace WindowsStore
 {
@@ -26,6 +27,7 @@ namespace WindowsStore
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        public User User;
         public App()
         {
             this.InitializeComponent();

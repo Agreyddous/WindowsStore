@@ -9,7 +9,7 @@ namespace WindowsStore.UserControls
         public ProductsControl()
         {
             this.InitializeComponent();
-            this.DataContextChanged += (s, e) => Bindings.Update();
+            DataContextChanged += (s, e) => UpdateLayout();
 
             ProductPrice.Text = "$" + Product.Price;
         }

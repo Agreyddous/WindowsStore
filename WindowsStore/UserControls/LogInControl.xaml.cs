@@ -1,33 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using WindowsStore.Entities;
+using WindowsStore.Handlers;
+using WindowsStore.ValueObjects;
 
 namespace WindowsStore.UserControls
 {
     public sealed partial class LogInControl : UserControl
     {
-        private List<User> UsersList;
-        public LogInControl()
+        public LogInControl() => InitializeComponent();
+
+        private async void UserNameBox_LostFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.InitializeComponent();
-            UsersList = new List<User>();
+            if(await FilesHandler.CheckIfExistsFile(UserNameBox.Text))
+            {
+                User loadUser = await FilesHandler.RetrieveUserContent(UserNameBox.Text + ".user");
+                UserNameBox.Text = "";
+                DataContext = loadUser;
+            }
+
+            if (UserNameBox.Text.Trim() == "")
+                AccountTypeBox.IsEnabled = false;
+            else
+                AccountTypeBox.IsEnabled = true;
         }
 
-        private void UserNameBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private async void UserNameBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            if (await FilesHandler.CheckIfExistsFile(UserNameBox.Text + ".user"))
+            {
+                User loadUser = await FilesHandler.RetrieveUserContent(UserNameBox.Text + ".user");
+                UserNameBox.Text = "";
+                DataContext = loadUser;
+            }
 
+            else if (UserNameBox.Text.Trim() != "")
+            {
+                AccountTypeBox.IsEnabled = true;
+            }
+        }
+
+        private async void AccountTypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string pic = "ms-appx:///Assets/" + UserPictureListBox.SelectedIndex + "User.png";
+            bool admin = AccountTypeBox.SelectedIndex == 1;
+            User newUser = new User(new Username(UserNameBox.Text), null, null, null, null, pic, admin);
+            await FilesHandler.StoreUser(newUser);
+            UserNameBox.Text = "";
+            DataContext = newUser;
         }
     }
 }
