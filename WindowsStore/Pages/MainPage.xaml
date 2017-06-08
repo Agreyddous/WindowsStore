@@ -90,14 +90,5 @@
                                 Visibility="Collapsed"
                                 DataContextChanged="NewProduct_DataContextChanged" />
 
-        <ProgressRing Name="Loading"
-                      Grid.Row="1"
-                      Height="200"
-                      Width="200"
-                      IsActive="True"
-                      Visibility="Collapsed"
-                      Background="Gray"
-                      Foreground="Transparent" />
-
     </Grid>
 </Page>

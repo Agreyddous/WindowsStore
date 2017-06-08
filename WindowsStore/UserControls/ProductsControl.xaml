@@ -6,8 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignHeight="200"
-             d:DesignWidth="150"
-             Loaded="UserControl_Loaded">
+             d:DesignWidth="150">
 
     <Grid>
         <Border CornerRadius="12"
@@ -62,8 +61,16 @@
                                    TextAlignment="Center"
                                    TextTrimming="CharacterEllipsis" />
 
-                        <TextBlock Name="ProductPrice"
+                        <TextBlock Name="icone"
                                    Margin="0,5,0,0"
+                                   Text="$"
+                                   RelativePanel.Below="ProductName"
+                                   FontSize="12" />
+
+                        <TextBlock Name="ProductPrice"
+                                   Margin="2,5,0,0"
+                                   Text="{x:Bind Product.Price}"
+                                   RelativePanel.RightOf="icone"
                                    RelativePanel.Below="ProductName"
                                    FontSize="12" />
 

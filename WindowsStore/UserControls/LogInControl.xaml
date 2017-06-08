@@ -19,7 +19,7 @@
         <Border CornerRadius="10"
                 BorderThickness="2"
                 BorderBrush="Gray"
-                Background="#7F818181"
+                Background="#FF818181"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
 

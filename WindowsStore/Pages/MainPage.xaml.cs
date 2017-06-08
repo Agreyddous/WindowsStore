@@ -31,16 +31,21 @@ namespace WindowsStore
 
             else if(ProductsGrid.SelectedItems.Count > 0)
             {
-                Loading.Visibility = Visibility.Visible;
                 List<Product> CartList = new List<Product>();
+                int x = ProductsGrid.SelectedItems.Count;
+
                 foreach (Product product in ProductsGrid.SelectedItems)
                 {
                     CartList.Add(product);
+                }
+
+                foreach (Product product in CartList)
+                {
                     ProductsList.Remove(product);
                 }
+
                 Purchase purchase = new Purchase(User, new Cart(CartList, 0), Enums.PaymentChoice.Money);
                 await FilesHandler.StorePurchase(purchase);
-                Loading.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -76,6 +81,8 @@ namespace WindowsStore
                     }
                 }
             }
+
+            LogIn.DataContext = null;
         }
 
         private void UserImage_Tapped(object sender, TappedRoutedEventArgs e)

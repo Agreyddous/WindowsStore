@@ -11,7 +11,5 @@ namespace WindowsStore.UserControls
             this.InitializeComponent();
             this.DataContextChanged += (s, e) => Bindings.Update();
         }
-
-        private void UserControl_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) => ProductPrice.Text = "$" + Product.Price;
     }
 }

@@ -43,14 +43,16 @@ namespace WindowsStore.UserControls
 
         private async void AccountTypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string pic = "ms-appx:///Assets/" + UserPictureListBox.SelectedIndex + "User.png";
-            bool admin = AccountTypeBox.SelectedIndex == 1;
-            User newUser = new User(new Username(UserNameBox.Text), null, null, null, null, pic, admin);
-            await FilesHandler.StoreUser(newUser);
-            UserNameBox.Text = "";
-            AccountTypeBox.SelectedItem = null;
-            AccountTypeBox.IsEnabled = false;
-            DataContext = newUser;
+            if (Common.IsSelected || Administrator.IsSelected)
+            {
+                string pic = "ms-appx:///Assets/" + UserPictureListBox.SelectedIndex + "User.png";
+                User newUser = new User(new Username(UserNameBox.Text), null, null, null, null, pic, Administrator.IsSelected);
+                await FilesHandler.StoreUser(newUser);
+                UserNameBox.Text = "";
+                AccountTypeBox.SelectedItem = null;
+                AccountTypeBox.IsEnabled = false;
+                DataContext = newUser; 
+            }
         }
     }
 }
