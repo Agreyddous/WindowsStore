@@ -75,6 +75,27 @@ namespace WindowsStore.Handlers
             return success;
         }
 
+        public static async Task<bool> StorePurchase(Purchase purchase)
+        {
+            bool success = true;
+
+            try
+            {
+                string json = JsonConvert.SerializeObject(purchase);
+
+                StorageFolder userFolder = ApplicationData.Current.LocalFolder;
+                StorageFile userFile = await userFolder.CreateFileAsync(purchase.User.Username + purchase.Id.ToString() + ".purc", CreationCollisionOption.ReplaceExisting);
+
+                await FileIO.WriteTextAsync(userFile, json);
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
+            return success;
+        }
+
         public static async Task<bool> CheckIfExistsFile(string fileName)
         {
             bool exists = true;
@@ -138,6 +159,24 @@ namespace WindowsStore.Handlers
                 StorageFolder folder = ApplicationData.Current.LocalFolder;
                 StorageFile file = await folder.GetFileAsync(fileName);
                 list = JsonConvert.DeserializeObject<ObservableCollection<Product>>(File.ReadAllText(file.Path));
+            }
+            catch (Exception)
+            {
+                list = null;
+            }
+
+            return list;
+        }
+
+        public static async Task<Purchase> RetrievePurchaseContent(string fileName)
+        {
+            Purchase list = null;
+
+            try
+            {
+                StorageFolder folder = ApplicationData.Current.LocalFolder;
+                StorageFile file = await folder.GetFileAsync(fileName);
+                list = JsonConvert.DeserializeObject<Purchase>(File.ReadAllText(file.Path));
             }
             catch (Exception)
             {

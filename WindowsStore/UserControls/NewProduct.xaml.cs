@@ -20,7 +20,7 @@ namespace WindowsStore.UserControls
                 ErrorOutput.Text = "";
                 try
                 {
-                    Product = new Product(ProductNameBox.Text, ProductDescriptionBox.Text, float.Parse(ProductPriceBox.Text), 10, 0, ProductImageUrl.Text);
+                    Product = new Product(ProductNameBox.Text, ProductDescriptionBox.Text, float.Parse(ProductPriceBox.Text), 10, 1, ProductImageUrl.Text);
 
                     if (!(await FilesHandler.CheckIfExistsFile(Product.Name + ".prod")))
                     {
@@ -52,6 +52,7 @@ namespace WindowsStore.UserControls
             ProductImageUrl.Text = "";
             ProductNameBox.Text = "";
             ProductPriceBox.Text = "";
+            ErrorOutput.Text = "";
         }
     }
 }

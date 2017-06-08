@@ -48,6 +48,8 @@ namespace WindowsStore.UserControls
             User newUser = new User(new Username(UserNameBox.Text), null, null, null, null, pic, admin);
             await FilesHandler.StoreUser(newUser);
             UserNameBox.Text = "";
+            AccountTypeBox.SelectedItem = null;
+            AccountTypeBox.IsEnabled = false;
             DataContext = newUser;
         }
     }

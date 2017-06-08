@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,7 +21,7 @@ namespace WindowsStore
             ProductsList = new ObservableCollection<Product>();
         }
 
-        private void CartButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void CartButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if(User.Admin)
             {
@@ -28,18 +29,26 @@ namespace WindowsStore
                 NewProduct.IsEnabled = true;
             }
 
-            else
+            else if(ProductsGrid.SelectedItems.Count > 0)
             {
-                //See Cart
+                Loading.Visibility = Visibility.Visible;
+                List<Product> CartList = new List<Product>();
+                foreach (Product product in ProductsGrid.SelectedItems)
+                {
+                    CartList.Add(product);
+                    ProductsList.Remove(product);
+                }
+                Purchase purchase = new Purchase(User, new Cart(CartList, 0), Enums.PaymentChoice.Money);
+                await FilesHandler.StorePurchase(purchase);
+                Loading.Visibility = Visibility.Collapsed;
             }
         }
 
         private async void LogInControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            User = (User)(sender as LogInControl).DataContext;
-
-            if (User != null)
+            if ((User)(sender as LogInControl).DataContext != null)
             {
+                User = (User)(sender as LogInControl).DataContext;
                 LogIn.IsEnabled = false;
                 LogIn.Visibility = Visibility.Collapsed;
                 UpdateLayout();
@@ -56,11 +65,14 @@ namespace WindowsStore
                 {
                     ObservableCollection<Product> List = new ObservableCollection<Product>();
                     List = await FilesHandler.RetrieveListContent("list.li");
-                    ProductsList.Clear();
 
-                    foreach (Product product in List)
+                    if (List.Count > 0 || List != null)
                     {
-                        ProductsList.Add(product);
+                        ProductsList.Clear();
+                        foreach (Product product in List)
+                        {
+                            ProductsList.Add(product);
+                        } 
                     }
                 }
             }

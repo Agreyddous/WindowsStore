@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsStore.Enums;
 
 namespace WindowsStore.Entities
 {
+    [DataContract]
     public class Purchase : Entity
     {
         public Purchase(User user, Cart cart, PaymentChoice paymentChoice)
@@ -25,10 +27,15 @@ namespace WindowsStore.Entities
             Date = DateTime.Now;
         }
 
+        [DataMember]
         public User User { get; private set; }
+        [DataMember]
         public Cart Cart { get; private set; }
+        [DataMember]
         public float Total { get; private set; }
+        [DataMember]
         public float SubTotal { get; private set; }
+        [DataMember]
         public DateTime Date { get; private set; }
     }
 }
