@@ -13,7 +13,7 @@ namespace WindowsStore
     public sealed partial class MainPage : Page
     {
         public User User;
-        private ObservableCollection<Product> ProductsList;
+        public ObservableCollection<Product> ProductsList;
         public MainPage()
         {
             this.InitializeComponent();
@@ -32,11 +32,6 @@ namespace WindowsStore
             {
                 //See Cart
             }
-        }
-
-        private void ProductsGrid_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            
         }
 
         private async void LogInControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -58,7 +53,16 @@ namespace WindowsStore
                     ActionButtonImageSource.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/Cart.png"));
 
                 if (await FilesHandler.CheckIfExistsFile("list.li"))
-                    ProductsList = await FilesHandler.RetrieveListContent("list.li");
+                {
+                    ObservableCollection<Product> List = new ObservableCollection<Product>();
+                    List = await FilesHandler.RetrieveListContent("list.li");
+                    ProductsList.Clear();
+
+                    foreach (Product product in List)
+                    {
+                        ProductsList.Add(product);
+                    }
+                }
             }
         }
 

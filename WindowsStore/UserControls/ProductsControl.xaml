@@ -6,7 +6,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignHeight="200"
-             d:DesignWidth="150">
+             d:DesignWidth="150"
+             Loaded="UserControl_Loaded">
 
     <Grid>
         <Border CornerRadius="12"

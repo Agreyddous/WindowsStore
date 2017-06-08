@@ -68,8 +68,7 @@
                   HorizontalAlignment="Center"
                   VerticalAlignment="Stretch"
                   IsItemClickEnabled="True"
-                  ItemsSource="{x:Bind ProductsList}"
-                  ItemClick="ProductsGrid_ItemClick">
+                  ItemsSource="{x:Bind ProductsList}">
 
             <GridView.ItemTemplate>
 

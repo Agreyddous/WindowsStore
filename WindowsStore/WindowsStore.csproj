@@ -100,6 +100,7 @@
     <Compile Include="Entities\Purchase.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Enums\PaymentChoice.cs" />
+    <Compile Include="Exceptions\FileMissingCustomException.cs" />
     <Compile Include="Handlers\FilesHandler.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

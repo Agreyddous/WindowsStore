@@ -9,9 +9,9 @@ namespace WindowsStore.UserControls
         public ProductsControl()
         {
             this.InitializeComponent();
-            DataContextChanged += (s, e) => UpdateLayout();
-
-            ProductPrice.Text = "$" + Product.Price;
+            this.DataContextChanged += (s, e) => Bindings.Update();
         }
+
+        private void UserControl_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) => ProductPrice.Text = "$" + Product.Price;
     }
 }

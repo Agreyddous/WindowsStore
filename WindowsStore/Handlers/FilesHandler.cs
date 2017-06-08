@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
 using WindowsStore.Entities;
+using WindowsStore.Exceptions;
 
 namespace WindowsStore.Handlers
 {
@@ -81,6 +82,8 @@ namespace WindowsStore.Handlers
             {
                 StorageFolder folder = ApplicationData.Current.LocalFolder;
                 StorageFile file = await folder.GetFileAsync(fileName);
+                if (file == null)
+                    throw new FileMissingCustomException(fileName);
             }
             catch (Exception)
             {
